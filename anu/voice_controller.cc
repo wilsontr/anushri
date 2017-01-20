@@ -275,7 +275,7 @@ void VoiceController::ControlChange(uint8_t controller, uint8_t value) {
         value > 0x40) ||
        (controller == midi::kSequencerSlideCc &&
         sequencer_recording_ && 
-        value > 0x10 ) ) {
+        value > 0x02 ) ) {
     uint8_t accent_slide_index = sequence_.num_notes >> 3;
     uint8_t accent_slide_mask = 1 << (sequence_.num_notes & 0x7);
     sequence_.accents[accent_slide_index] |= accent_slide_mask;
