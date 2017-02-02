@@ -270,16 +270,22 @@ void VoiceController::ReleaseAllHeldNotes() {
 
 /* static */
 void VoiceController::ControlChange(uint8_t controller, uint8_t value) {
-  if ( (controller == midi::kModulationWheelMsb &&
+  if ( ( ( controller == midi::kModulationWheelMsb ) || ( controller == midi::kSequencerAccentCc ) ) &&
         sequencer_recording_ &&
-        value > 0x40) ||
-       (controller == midi::kSequencerSlideCc &&
-        sequencer_recording_ && 
-        value > 0x02 ) ) {
+        value > 0x20 ) {
     uint8_t accent_slide_index = sequence_.num_notes >> 3;
     uint8_t accent_slide_mask = 1 << (sequence_.num_notes & 0x7);
     sequence_.accents[accent_slide_index] |= accent_slide_mask;
   }
+
+  if ( (controller == midi::kSequencerSlideCc &&
+        sequencer_recording_ && 
+        value > 0x20 ) ) {
+    uint8_t accent_slide_index = sequence_.num_notes >> 3;
+    uint8_t accent_slide_mask = 1 << (sequence_.num_notes & 0x7);
+    sequence_.slides[accent_slide_index] |= accent_slide_mask;
+  }
+
   voice_.ControlChange(controller, value);
   switch (controller) {
     case midi::kHoldPedal:
