@@ -45,8 +45,9 @@ const uint8_t kAssignableCcA = 0x10;
 const uint8_t kAssignableCcB = 0x11;
 const uint8_t kAssignableCcC = 0x12;
 const uint8_t kAssignableCcD = 0x13;
-// undefined CC used for sending slide commands from controllers that don't support pitch bend
-const uint8_t kSequencerSlideCc = 0x66; 
+// enable CC-only controls for sequencer slides and accents
+const uint8_t kSequencerSlideCc = 0x74; // decimal 116
+const uint8_t kSequencerAccentCc = 0x75; // decimal 117
 
 // A device that responds to MIDI messages should implement this interface.
 // Everything is static - this is because the main synth class is a "static
